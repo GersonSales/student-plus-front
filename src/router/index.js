@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '../components/Login'
 import Register from '../components/Register';
-import StudentDetails from '../components/StudentDetails'
+import StudentDetails from '../components/student-details/StudentDetails'
 
 Vue.use(Router);
 
