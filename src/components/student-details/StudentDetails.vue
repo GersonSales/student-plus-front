@@ -31,12 +31,9 @@
 
               <div class="hr-line-dashed"></div>
 
-              <div class="row text-center">
-
-                <div class="col-md-10 h-100 p-lg">
-                  <button class="btn btn-primary btn-sm demo2" v-on:click="log">Save</button>
-                </div>
-
+              <div class="col-lg-6 h-100 p-lg">
+                <button class="btn btn-danger btn-sm demo4" v-on:click="confirmDeletion">Run example</button>
+                <button class="btn btn-primary btn-sm demo2" v-on:click="save">Save</button>
               </div>
 
 
@@ -81,13 +78,59 @@
     },
 
     methods: {
-      log() {
-        console.log(this.student);
+      save() {
+        const studentId = localStorage.getItem('studentId');
+        axios.put('http://localhost:5000/students/' + studentId, this.student, {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        })
+          .then((res) => {
+            swal({
+              title: "Success!",
+              text: "Student information successfully updated!",
+              icon: "success"
+            });
+          })
+          .catch((error) => {
+            swal("Failed! :(", error.message, "error");
+
+          });
+      },
+
+      confirmDeletion() {
         swal({
-          title: "Success!",
-          text: "Student information successfully updated!",
-          icon: "success"
+          title: "Are you sure?",
+          text: "You will not be able to recover this imaginary file!",
+          icon: "warning",
+          dangerMode: true,
+          buttons: {
+            cancel: true,
+            confirm: {
+              visible: true,
+              text: "Yes, delete it!",
+            }
+          }
+        }).then((willDelete) => {
+          if (willDelete)
+            this.deleteStudent();
         });
+      },
+
+      deleteStudent() {
+        const studentId = localStorage.getItem('studentId');
+        axios.delete('http://localhost:5000/students/' + studentId, {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        })
+          .then((res) => {
+            swal('Deleted!', 'Student ' + this.student.firstName + ' has been deleted.', 'success');
+            this.$router.push('/register');
+          })
+          .catch((error) => {
+            console.log(error);
+          })
       },
 
       fetchData() {
