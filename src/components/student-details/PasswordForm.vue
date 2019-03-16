@@ -16,7 +16,12 @@
 
 <script>
   export default {
-    name: "PasswordForm"
+    name: "PasswordForm",
+    props: {
+      oldPassword: String,
+      password: String,
+      confirmation: String
+    }
   }
 </script>
 

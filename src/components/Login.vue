@@ -9,7 +9,8 @@
             <input type="email" class="form-control" placeholder="Username" required="" v-model="credentials.email">
           </div>
           <div class="form-group">
-            <input type="password" class="form-control" placeholder="Password" required="" v-model="credentials.password">
+            <input type="password" class="form-control" placeholder="Password" required=""
+                   v-model="credentials.password">
           </div>
           <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 
@@ -32,6 +33,8 @@
 
 <script>
   import axios from 'axios'
+  import jwtDecodee from 'vue-jwt-decode'
+
   export default {
     name: 'Login',
 
@@ -47,7 +50,11 @@
     methods: {
       login() {
         axios.post('http://localhost:5000/login', this.credentials)
-          .then(() => {
+          .then((res) => {
+            const token = res.headers.pragma;
+            const decodedToken = jwtDecodee.decode(token);
+            localStorage.setItem('token', token);
+            localStorage.setItem('studentId', decodedToken.id);
             this.$router.push('/student-details');
           })
           .catch((error) => {

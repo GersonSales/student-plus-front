@@ -11,15 +11,23 @@
           <div class="ibox-content">
             <form method="get">
 
-              <PersonalInfo></PersonalInfo>
+              <PersonalInfo v-bind:first-name="student.firstName"
+                            v-bind:last-name="student.lastName"
+                            v-bind:email="student.email"
+              ></PersonalInfo>
+
+              <div class="hr-line-dashed"></div>
+
+
+              <AddressForm v-bind:state="student.state"
+                           v-bind:city="student.city"
+                           v-bind:street="student.street">
+
+              </AddressForm>
 
               <div class="hr-line-dashed"></div>
 
               <PasswordForm></PasswordForm>
-
-              <div class="hr-line-dashed"></div>
-
-              <AddressForm></AddressForm>
 
               <div class="hr-line-dashed"></div>
 
@@ -47,6 +55,9 @@
   import PasswordForm from "./PasswordForm";
   import AddressForm from "./AddressForm";
 
+  import axios from 'axios';
+
+
   export default {
     name: 'StudentDetails',
     components: {
@@ -54,14 +65,45 @@
       PersonalInfo,
       AddressForm
     },
+
+    created: function () {
+      this.fetchData();
+    },
+
+    data: function () {
+      return {
+        student: {
+          firstName: '',
+          lastName: ''
+        }
+      }
+
+    },
+
     methods: {
       log() {
+        console.log(this.student);
         swal({
           title: "Success!",
           text: "Student information successfully updated!",
           icon: "success"
         });
-      }
+      },
+
+      fetchData() {
+        const studentId = localStorage.getItem('studentId');
+        axios.get('http://localhost:5000/students/' + studentId, {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        })
+          .then((res) => {
+            this.student = res.data;
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+      },
     }
   }
 </script>
