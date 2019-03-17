@@ -11,7 +11,11 @@
           <div class="ibox-content">
             <form method="get">
 
-              <ImageLoader></ImageLoader>
+              <croppa v-model="profileImageFile">
+                <img crossOrigin="anonymous"
+                     :src="student.profileImageUrl"
+                     slot="initial">
+              </croppa>
 
               <div class="hr-line-dashed"></div>
 
@@ -36,7 +40,7 @@
 
               <div class="col-lg-6 h-100 p-lg">
                 <button class="btn btn-danger btn-sm demo4" v-on:click="confirmDeletion">Run example</button>
-                <button class="btn btn-primary btn-sm demo2" v-on:click="save">Save</button>
+                <button class="btn btn-primary btn-sm demo2" v-on:click="uploadCroppedImage">Save</button>
               </div>
 
 
@@ -70,18 +74,22 @@
 
     created: function () {
       this.fetchData();
+      console.log(this.student)
     },
 
     data: function () {
       return {
         student: {
+          id: '',
           firstName: '',
           lastName: '',
           email: '',
           inputPassword: '',
           newPassword: '',
-          confirmation: ''
-        }
+          confirmation: '',
+          profileImageUrl: ''
+        },
+        profileImageFile: {}
       }
 
     },
@@ -161,6 +169,31 @@
             console.log(error);
           })
       },
+
+      uploadCroppedImage() {
+        this.profileImageFile.generateBlob((blob) => {
+          const fd = new FormData();
+          if (!blob) {
+            blob = new Blob([], {type: "image/png"});
+          }
+
+          fd.append('file', blob, 'profileImage.png');
+
+          axios.post('http://localhost:5000/students/' + this.student.id + '/profileImage', fd, {
+            headers: {
+              'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+          })
+            .then((res) => {
+              console.log(res)
+            })
+            .catch((error) => {
+              console.log(error)
+
+            })
+          // write code to upload the cropped image file (a file is a blob)
+        }, 'image/png', 0.8) // 80% compressed jpeg file
+      }
     }
   }
 </script>
