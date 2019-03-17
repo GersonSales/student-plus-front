@@ -11,23 +11,22 @@
           <div class="ibox-content">
             <form method="get">
 
-              <PersonalInfo v-bind:first-name="student.firstName"
-                            v-bind:last-name="student.lastName"
-                            v-bind:email="student.email"
-              ></PersonalInfo>
+              <PersonalInfo v-bind:firstName.sync="student.firstName"
+                            v-bind:lastName.sync="student.lastName"
+                            v-bind:email.sync="student.email"></PersonalInfo>
 
               <div class="hr-line-dashed"></div>
 
 
-              <AddressForm v-bind:state="student.state"
-                           v-bind:city="student.city"
-                           v-bind:street="student.street">
+              <AddressForm v-bind:state.sync="student.state"
+                           v-bind:city.sync="student.city"
+                           v-bind:street.sync="student.street">
 
               </AddressForm>
 
               <div class="hr-line-dashed"></div>
 
-              <PasswordForm></PasswordForm>
+              <PasswordForm v-bind:newPassword.sync="student.password"></PasswordForm>
 
               <div class="hr-line-dashed"></div>
 
@@ -71,13 +70,22 @@
       return {
         student: {
           firstName: '',
-          lastName: ''
+          lastName: '',
+          email: '',
+          inputPassword:'',
+          newPassword:'',
+          confirmation:''
         }
       }
 
     },
 
     methods: {
+      logg: function () {
+        console.log(JSON.stringify(this.student))
+      },
+
+
       save() {
         const studentId = localStorage.getItem('studentId');
         axios.put('http://localhost:5000/students/' + studentId, this.student, {
