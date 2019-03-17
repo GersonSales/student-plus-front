@@ -11,6 +11,10 @@
           <div class="ibox-content">
             <form method="get">
 
+              <ImageLoader></ImageLoader>
+
+              <div class="hr-line-dashed"></div>
+
               <PersonalInfo v-bind:firstName.sync="student.firstName"
                             v-bind:lastName.sync="student.lastName"
                             v-bind:email.sync="student.email"></PersonalInfo>
@@ -52,11 +56,13 @@
   import AddressForm from "./AddressForm";
 
   import axios from 'axios';
+  import ImageLoader from "./ImageLoader";
 
 
   export default {
     name: 'StudentDetails',
     components: {
+      ImageLoader,
       PasswordForm,
       PersonalInfo,
       AddressForm
@@ -72,9 +78,9 @@
           firstName: '',
           lastName: '',
           email: '',
-          inputPassword:'',
-          newPassword:'',
-          confirmation:''
+          inputPassword: '',
+          newPassword: '',
+          confirmation: ''
         }
       }
 
