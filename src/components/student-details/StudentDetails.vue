@@ -1,17 +1,25 @@
 <template>
-  <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-      <div class="col-lg-6">
-        <div class="ibox ">
+  <div>
+    <div class="wrapper wrapper-content animated fadeInRight">
+      <div class="col-lg-auto">
+        <div class="ibox">
           <div class="ibox-title">
             <h5>Student information
               <small>update student information.</small>
             </h5>
+
+            <router-link to="/login">
+
+              <i class="fa fa-sign-out"></i> Log out
+            </router-link>
           </div>
           <div class="ibox-content">
             <form method="get">
 
-              <croppa v-model="profileImageFile">
+              <croppa v-model="profileImageFile"
+                      :width="150"
+                      :height="150"
+                      :prevent-white-space="true">
                 <img crossOrigin="anonymous"
                      :src="student.profileImageUrl"
                      slot="initial">
@@ -38,10 +46,8 @@
 
               <div class="hr-line-dashed"></div>
 
-              <div class="col-lg-6 h-100 p-lg">
-                <button class="btn btn-danger btn-sm demo4" v-on:click="confirmDeletion">Run example</button>
-                <button class="btn btn-primary btn-sm demo2" v-on:click="save">Save</button>
-              </div>
+              <button class="btn btn-danger btn-sm demo4" v-on:click="confirmDeletion">Delete student</button>
+              <button class="btn btn-primary btn-sm demo2" v-on:click="save">Save</button>
 
 
             </form>

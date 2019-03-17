@@ -11,7 +11,12 @@ import 'bootstrap/dist/js/bootstrap.min'
 
 import 'vue-croppa/dist/vue-croppa.css'
 
+
+import './assets/css/bootstrap.min.css'
+// import './assets/css/animate.css'
 import './assets/css/style.css'
+
+
 
 Vue.use(Croppa);
 Vue.config.productionTip = false;

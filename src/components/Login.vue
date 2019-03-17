@@ -14,9 +14,9 @@
           </div>
           <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 
-          <a href="#">
+          <router-link to="/forgot_password">
             <small>Forgot password?</small>
-          </a>
+          </router-link>
           <p class="text-muted text-center">
             <small>Do not have an account?</small>
           </p>
@@ -58,7 +58,7 @@
             this.$router.push('/student-details');
           })
           .catch((error) => {
-            console.log(error)
+            swal("Failed! :(", error.message, "error");
           })
       }
     }

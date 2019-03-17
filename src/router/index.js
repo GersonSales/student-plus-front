@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Login from '../components/Login'
 import Register from '../components/Register';
 import StudentDetails from '../components/student-details/StudentDetails'
+import ForgotPassword from "../components/ForgotPassword";
 
 Vue.use(Router);
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/student-details',
       name: 'StudentDetails',
       component: StudentDetails
+    },
+    {
+      path: '/forgot_password',
+      name: 'ForgotPassword',
+      component: ForgotPassword
     }
   ]
 })

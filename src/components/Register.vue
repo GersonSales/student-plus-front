@@ -18,7 +18,8 @@
             <input type="password" class="form-control" placeholder="Password" required="" v-model="student.password">
           </div>
           <div class="form-group">
-            <div class="checkbox i-checks"><label> <input type="checkbox"><i></i> Agree the terms and policy </label>
+            <div class="checkbox i-checks"><label> <input type="checkbox" required=""><i></i> Agree the terms and policy
+            </label>
             </div>
           </div>
           <button type="submit" class="btn btn-primary block full-width m-b">Register</button>
@@ -40,6 +41,7 @@
 
 <script>
   import axios from 'axios';
+  import swal from 'sweetalert'
 
   export default {
     name: 'Register',
@@ -63,7 +65,7 @@
             this.$router.push('/login');
           })
           .catch((error) => {
-            console.log(error);
+            swal("Failed! :(", error.message, "error");
           });
       }
     }
