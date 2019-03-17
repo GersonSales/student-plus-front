@@ -40,7 +40,7 @@
 
               <div class="col-lg-6 h-100 p-lg">
                 <button class="btn btn-danger btn-sm demo4" v-on:click="confirmDeletion">Run example</button>
-                <button class="btn btn-primary btn-sm demo2" v-on:click="uploadCroppedImage">Save</button>
+                <button class="btn btn-primary btn-sm demo2" v-on:click="save">Save</button>
               </div>
 
 
@@ -60,13 +60,11 @@
   import AddressForm from "./AddressForm";
 
   import axios from 'axios';
-  import ImageLoader from "./ImageLoader";
 
 
   export default {
     name: 'StudentDetails',
     components: {
-      ImageLoader,
       PasswordForm,
       PersonalInfo,
       AddressForm
@@ -74,7 +72,6 @@
 
     created: function () {
       this.fetchData();
-      console.log(this.student)
     },
 
     data: function () {
@@ -95,10 +92,6 @@
     },
 
     methods: {
-      logg: function () {
-        console.log(JSON.stringify(this.student))
-      },
-
 
       save() {
         const studentId = localStorage.getItem('studentId');
@@ -107,16 +100,11 @@
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
         })
-          .then((res) => {
-            swal({
-              title: "Success!",
-              text: "Student information successfully updated!",
-              icon: "success"
-            });
+          .then(() => {
+            this.uploadProfileImage()
           })
           .catch((error) => {
             swal("Failed! :(", error.message, "error");
-
           });
       },
 
@@ -151,7 +139,7 @@
             this.$router.push('/register');
           })
           .catch((error) => {
-            console.log(error);
+            swal("Failed! :(", error.message, "error");
           })
       },
 
@@ -166,11 +154,11 @@
             this.student = res.data;
           })
           .catch((error) => {
-            console.log(error);
+            swal("Failed! :(", error.message, "error");
           })
       },
 
-      uploadCroppedImage() {
+      uploadProfileImage() {
         this.profileImageFile.generateBlob((blob) => {
           const fd = new FormData();
           if (!blob) {
@@ -179,18 +167,19 @@
 
           fd.append('file', blob, 'profileImage.png');
 
-          axios.post('http://localhost:5000/students/' + this.student.id + '/profileImage', fd, {
+          return axios.post('http://localhost:5000/students/' + this.student.id + '/profileImage', fd, {
             headers: {
               'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
+          }).then(() => {
+            swal({
+              title: "Success!",
+              text: "Student information successfully updated!",
+              icon: "success"
+            });
+          }).catch((error) => {
+            swal("Failed! :(", error.message, "error");
           })
-            .then((res) => {
-              console.log(res)
-            })
-            .catch((error) => {
-              console.log(error)
-
-            })
           // write code to upload the cropped image file (a file is a blob)
         }, 'image/png', 0.8) // 80% compressed jpeg file
       }
