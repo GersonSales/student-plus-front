@@ -64,9 +64,10 @@
 
                   <button class="btn btn-danger btn-sm col-md-4 mr-3" v-on:click="confirmDeletion">Delete student
                   </button>
-                  <button class="btn btn-primary btn-sm col-md-4 form-check"
-                          v-on:click="save"
-                          :disabled="student.password === undefined || student.password.trim() === '' ">Save</button>
+                  <vue-ladda :loading="saveLoading" button-class="btn btn-primary btn-sm col-md-4 form-check"
+                             v-on:click="save"
+                             :disabled="student.password === undefined || student.password.trim() === '' ">Save
+                  </vue-ladda>
 
                 </div>
               </div>
@@ -99,6 +100,7 @@
 
     data: function () {
       return {
+        saveLoading: false,
         student: JSON.parse(localStorage.getItem('student')),
         profileImageFile: {}
 
@@ -113,6 +115,7 @@
       },
 
       save() {
+        this.saveLoading = true;
         const studentId = localStorage.getItem('studentId');
         axios.put('https://student-plus-api.herokuapp.com/students/' + studentId, this.student, {
           headers: {
@@ -123,6 +126,7 @@
             this.uploadProfileImage()
           })
           .catch((error) => {
+            this.saveLoading = false;
             swal("Failed! :(", error.message, "error");
           });
       },
@@ -176,12 +180,14 @@
               'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
           }).then(() => {
+            this.saveLoading = false;
             swal({
               title: "Success!",
               text: "Student information successfully updated!",
               icon: "success"
             });
           }).catch((error) => {
+            this.saveLoading = false;
             swal("Failed! :(", error.message, "error");
           })
           // write code to upload the cropped image file (a file is a blob)

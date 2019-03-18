@@ -12,7 +12,7 @@
             <input type="password" class="form-control" placeholder="Password" required=""
                    v-model="credentials.password">
           </div>
-          <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+          <vue-ladda type="submit" :loading="loadingLogin" button-class="btn btn-primary block full-width m-b">Login</vue-ladda>
 
           <router-link to="/forgot_password">
             <small>Forgot password?</small>
@@ -41,6 +41,7 @@
 
     data: function () {
       return {
+        loadingLogin: false,
         credentials: {
           email: "",
           password: ""
@@ -50,6 +51,7 @@
 
     methods: {
       login() {
+        this.loadingLogin = true;
         axios.post('https://student-plus-api.herokuapp.com/login', this.credentials)
           .then((res) => {
             const token = res.headers.pragma;
@@ -59,6 +61,7 @@
             this.fetchStudentData(decodedToken.id);
           })
           .catch((error) => {
+            this.loadingLogin = false;
             swal("Failed! :(", error.message, "error");
           })
       },
@@ -71,9 +74,11 @@
         })
           .then((res) => {
             localStorage.setItem('student', JSON.stringify(res.data));
+            this.loadingLogin = false;
             this.$router.push('/student-details');
           })
           .catch((error) => {
+            this.loadingLogin = false;
             swal("Failed! :(", error.message, "error");
           })
 

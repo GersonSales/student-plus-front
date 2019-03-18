@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/'
 import Croppa from 'vue-croppa'
+import VueLadda from 'vue-ladda'
 
 
 import 'jquery/dist/jquery.min'
@@ -17,6 +18,8 @@ import './assets/css/animate.css'
 import './assets/css/style.css'
 
 Vue.use(Croppa);
+Vue.component('vue-ladda', VueLadda)
+
 
 new Vue({
   router,

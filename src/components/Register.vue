@@ -22,7 +22,9 @@
             </label>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary block full-width m-b">Register</button>
+          <vue-ladda type="submit" :loading="registerLoading" button-class="btn btn-primary block full-width m-b">
+            Register
+          </vue-ladda>
 
           <p class="text-muted text-center">
             <small>Already have an account?</small>
@@ -48,6 +50,7 @@
 
     data() {
       return {
+        registerLoading: false,
         student: {
           firstName: '',
           lastName: '',
@@ -60,11 +63,19 @@
 
     methods: {
       register() {
+        this.registerLoading = true;
         axios.post('https://student-plus-api.herokuapp.com/students/sign-up', this.student)
           .then(() => {
+            this.registerLoading = false;
+            swal({
+              title: "Success!",
+              text: "Student successfully registered!",
+              icon: "success"
+            });
             this.$router.push('/login');
           })
           .catch((error) => {
+            this.registerLoading = false;
             swal("Failed! :(", error.message, "error");
           });
       }
