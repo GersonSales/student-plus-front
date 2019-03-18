@@ -34,6 +34,7 @@
 <script>
   import axios from 'axios'
   import jwtDecodee from 'vue-jwt-decode'
+  import swal from 'sweetalert'
 
   export default {
     name: 'Login',
@@ -63,7 +64,7 @@
       },
 
       fetchStudentData(studentId) {
-        axios.get('https://student-plus-api.herokuapp.com/studentss/' + studentId, {
+        axios.get('https://student-plus-api.herokuapp.com/students/' + studentId, {
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
