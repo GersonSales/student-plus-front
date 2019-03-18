@@ -44,8 +44,8 @@
               <div class="">
                 <PersonalInfo
                     v-bind:first-name.sync="student.firstName"
-                    v-bind:last-name="student.lastName"
-                    v-bind:email="student.email"></PersonalInfo>
+                    v-bind:last-name.sync="student.lastName"
+                    v-bind:email.sync="student.email"></PersonalInfo>
 
                 <div class="hr-line-dashed"></div>
 
@@ -116,6 +116,7 @@
 
       save() {
         this.saveLoading = true;
+        console.log('student: ' + JSON.stringify(this.student));
         const studentId = localStorage.getItem('studentId');
         axios.put('https://student-plus-api.herokuapp.com/students/' + studentId, this.student, {
           headers: {
