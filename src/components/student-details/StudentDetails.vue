@@ -56,7 +56,7 @@
                 </AddressForm>
 
                 <div class="hr-line-dashed"></div>
-                <PasswordForm v-bind:new-password.sync="student.password"></PasswordForm>
+                <PasswordForm name="inputPass" v-bind:new-password.sync="student.password"></PasswordForm>
 
                 <div class="hr-line-dashed"></div>
 
@@ -64,7 +64,9 @@
 
                   <button class="btn btn-danger btn-sm col-md-4 mr-3" v-on:click="confirmDeletion">Delete student
                   </button>
-                  <button class="btn btn-primary btn-sm col-md-4 form-check" v-on:click="save" :disabled="student.password === '' ">Save</button>
+                  <button class="btn btn-primary btn-sm col-md-4 form-check"
+                          v-on:click="save"
+                          :disabled="student.password === undefined || student.password.trim() === '' ">Save</button>
 
                 </div>
               </div>
@@ -97,7 +99,6 @@
 
     data: function () {
       return {
-        firstName: 'g',
         student: JSON.parse(localStorage.getItem('student')),
         profileImageFile: {}
 
