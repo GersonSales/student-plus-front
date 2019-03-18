@@ -49,17 +49,33 @@
 
     methods: {
       login() {
-        axios.post('http://localhost:5000/login', this.credentials)
+        axios.post('https://goo.gl/DpnR9Y/login', this.credentials)
           .then((res) => {
             const token = res.headers.pragma;
             const decodedToken = jwtDecodee.decode(token);
             localStorage.setItem('token', token);
             localStorage.setItem('studentId', decodedToken.id);
+            this.fetchStudentData(decodedToken.id);
+          })
+          .catch((error) => {
+            swal("Failed! :(", error.message, "error");
+          })
+      },
+
+      fetchStudentData(studentId) {
+        axios.get('https://goo.gl/DpnR9Y/students/' + studentId, {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        })
+          .then((res) => {
+            localStorage.setItem('student', JSON.stringify(res.data));
             this.$router.push('/student-details');
           })
           .catch((error) => {
             swal("Failed! :(", error.message, "error");
           })
+
       }
     }
 

@@ -4,6 +4,7 @@ import Login from '../components/Login'
 import Register from '../components/Register';
 import StudentDetails from '../components/student-details/StudentDetails'
 import ForgotPassword from "../components/ForgotPassword";
+import PageNotFound from "../components/common/PageNotFound";
 
 Vue.use(Router);
 
@@ -28,6 +29,15 @@ export default new Router({
       path: '/forgot_password',
       name: 'ForgotPassword',
       component: ForgotPassword
+    },
+    {
+      path: '/',
+      redirect: '/register'
+    },
+    {
+      path: '*',
+      name: 'PageNotFount',
+      component: PageNotFound
     }
   ]
 })

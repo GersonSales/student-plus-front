@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="container">
     <div class="wrapper wrapper-content animated fadeInRight">
       <div class="col-lg-auto">
         <div class="ibox">
           <div class="ibox-title">
-            <h5>Student information
-              <small>update student information.</small>
+            <h5>Welcome {{student.firstName}}!
+              <small>update your student information.</small>
             </h5>
 
             <router-link to="/login">
@@ -14,41 +14,60 @@
             </router-link>
           </div>
           <div class="ibox-content">
-            <form method="get">
 
-              <croppa v-model="profileImageFile"
+
+            <form method="get" class="container">
+
+              <div class="row justify-content-center bgimg">
+
+                <div class="profImage">
+
+                  <croppa
+                      v-model="profileImageFile"
                       :width="150"
                       :height="150"
+                      placeholder="Choose a profile picture."
+                      placeholder-color="#fff"
+                      :placeholder-font-size="14"
+                      remove-button-color="black"
+                      :remove-button-size="24"
                       :prevent-white-space="true">
-                <img crossOrigin="anonymous"
-                     :src="student.profileImageUrl"
-                     slot="initial">
-              </croppa>
+                    <img crossOrigin="anonymous"
+                         :src="student.profileImageUrl"
+                         slot="initial">
+                  </croppa>
+                </div>
+              </div>
 
               <div class="hr-line-dashed"></div>
 
-              <PersonalInfo v-bind:firstName.sync="student.firstName"
-                            v-bind:lastName.sync="student.lastName"
-                            v-bind:email.sync="student.email"></PersonalInfo>
+              <div class="">
+                <PersonalInfo
+                    v-bind:first-name.sync="student.firstName"
+                    v-bind:last-name="student.lastName"
+                    v-bind:email="student.email"></PersonalInfo>
 
-              <div class="hr-line-dashed"></div>
+                <div class="hr-line-dashed"></div>
 
+                <AddressForm v-bind:state.sync="student.state"
+                             v-bind:city.sync="student.city"
+                             v-bind:street.sync="student.street">
 
-              <AddressForm v-bind:state.sync="student.state"
-                           v-bind:city.sync="student.city"
-                           v-bind:street.sync="student.street">
+                </AddressForm>
 
-              </AddressForm>
+                <div class="hr-line-dashed"></div>
+                <PasswordForm v-bind:new-password.sync="student.password"></PasswordForm>
 
-              <div class="hr-line-dashed"></div>
+                <div class="hr-line-dashed"></div>
 
-              <PasswordForm v-bind:newPassword.sync="student.password"></PasswordForm>
+                <div class="row justify-content-center">
 
-              <div class="hr-line-dashed"></div>
+                  <button class="btn btn-danger btn-sm col-md-4 mr-3" v-on:click="confirmDeletion">Delete student
+                  </button>
+                  <button class="btn btn-primary btn-sm col-md-4 form-check" v-on:click="save">Save</button>
 
-              <button class="btn btn-danger btn-sm demo4" v-on:click="confirmDeletion">Delete student</button>
-              <button class="btn btn-primary btn-sm demo2" v-on:click="save">Save</button>
-
+                </div>
+              </div>
 
             </form>
           </div>
@@ -76,32 +95,25 @@
       AddressForm
     },
 
-    created: function () {
-      this.fetchData();
-    },
-
     data: function () {
       return {
-        student: {
-          id: '',
-          firstName: '',
-          lastName: '',
-          email: '',
-          inputPassword: '',
-          newPassword: '',
-          confirmation: '',
-          profileImageUrl: ''
-        },
+        firstName: 'g',
+        student: JSON.parse(localStorage.getItem('student')),
         profileImageFile: {}
+
       }
 
     },
 
     methods: {
 
+      logg() {
+        console.log(this.student.firstName)
+      },
+
       save() {
         const studentId = localStorage.getItem('studentId');
-        axios.put('http://localhost:5000/students/' + studentId, this.student, {
+        axios.put('https://goo.gl/DpnR9Y/students/' + studentId, this.student, {
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
@@ -135,7 +147,7 @@
 
       deleteStudent() {
         const studentId = localStorage.getItem('studentId');
-        axios.delete('http://localhost:5000/students/' + studentId, {
+        axios.delete('https://goo.gl/DpnR9Y/students/' + studentId, {
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
@@ -143,21 +155,6 @@
           .then((res) => {
             swal('Deleted!', 'Student ' + this.student.firstName + ' has been deleted.', 'success');
             this.$router.push('/register');
-          })
-          .catch((error) => {
-            swal("Failed! :(", error.message, "error");
-          })
-      },
-
-      fetchData() {
-        const studentId = localStorage.getItem('studentId');
-        axios.get('http://localhost:5000/students/' + studentId, {
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-          }
-        })
-          .then((res) => {
-            this.student = res.data;
           })
           .catch((error) => {
             swal("Failed! :(", error.message, "error");
@@ -173,7 +170,7 @@
 
           fd.append('file', blob, 'profileImage.png');
 
-          return axios.post('http://localhost:5000/students/' + this.student.id + '/profileImage', fd, {
+          return axios.post('https://goo.gl/DpnR9Y/students/' + this.student.id + '/profileImage', fd, {
             headers: {
               'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
@@ -192,3 +189,17 @@
     }
   }
 </script>
+
+<style type="text/css">
+  .bgimg {
+    background-image: url('../../assets/img/profile_image_bg.jpg');
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .profImage {
+    background: #f3f3f4;
+    padding: 7px;
+    border-radius: 10px;
+  }
+</style>

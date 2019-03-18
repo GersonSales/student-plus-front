@@ -5,16 +5,16 @@
       <div class="col-sm-3">
         <input type="text"
                class="form-control"
-               v-model="state"
-               @input="$emit('update:state', state)">
+               v-model="updatedState"
+               @input="$emit('update:state', updatedState)">
       </div>
 
       <label class="col-sm-2 col-form-label">City</label>
       <div class="col-sm-5">
         <input type="text"
                class="form-control"
-               v-model="city"
-               @input="$emit('update:city', city)">
+               v-model="updatedCity"
+               @input="$emit('update:city', updatedCity)">
       </div>
     </div>
 
@@ -22,8 +22,8 @@
       <div class="col-sm-10">
         <input type="text"
                class="form-control"
-               v-model="street"
-               @input="$emit('update:street', street)">
+               v-model="updatedStreet"
+               @input="$emit('update:street', updatedStreet)">
       </div>
     </div>
   </div>
@@ -37,6 +37,14 @@
       state: String,
       city: String,
       street: String
+    },
+
+    data: function () {
+        return {
+          updatedState: this.state,
+          updatedCity: this.city,
+          updatedStreet: this.state
+        }
     }
   }
 </script>

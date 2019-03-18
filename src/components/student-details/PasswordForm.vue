@@ -9,9 +9,10 @@
     <div class="form-group row"><label class="col-sm-2 col-form-label">New Password</label>
       <div class="col-sm-10">
         <input type="password"
+               required=""
                class="form-control"
-               v-model="newPassword"
-               @input="$emit('update:newPassword', newPassword)">
+               v-model="updatedPassword"
+               @input="$emit('update:newPassword', updatedPassword)">
       </div>
     </div>
 
@@ -29,7 +30,14 @@
     name: "PasswordForm",
     props: {
       newPassword: String
+    },
+
+    data: function () {
+      return {
+        updatedPassword: this.password
+      }
     }
+
   }
 </script>
 
