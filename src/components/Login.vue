@@ -49,7 +49,7 @@
 
     methods: {
       login() {
-        axios.post('https://goo.gl/DpnR9Y/login', this.credentials)
+        axios.post('https://student-plus-api.herokuapp.com/login', this.credentials)
           .then((res) => {
             const token = res.headers.pragma;
             const decodedToken = jwtDecodee.decode(token);
@@ -63,7 +63,7 @@
       },
 
       fetchStudentData(studentId) {
-        axios.get('https://goo.gl/DpnR9Y/students/' + studentId, {
+        axios.get('https://student-plus-api.herokuapp.com/studentss/' + studentId, {
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }

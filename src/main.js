@@ -17,7 +17,6 @@ import './assets/css/animate.css'
 import './assets/css/style.css'
 
 Vue.use(Croppa);
-Vue.config.productionTip = false;
 
 new Vue({
   router,
