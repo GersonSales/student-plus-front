@@ -42,10 +42,10 @@
               <div class="hr-line-dashed"></div>
 
               <div class="">
-                <PersonalInfo
-                    v-bind:first-name.sync="student.firstName"
-                    v-bind:last-name.sync="student.lastName"
-                    v-bind:email.sync="student.email"></PersonalInfo>
+                <PersonalInfo v-bind:registration-number="student.registrationNumber"
+                              v-bind:first-name.sync="student.firstName"
+                              v-bind:last-name.sync="student.lastName"
+                              v-bind:email.sync="student.email"></PersonalInfo>
 
                 <div class="hr-line-dashed"></div>
 

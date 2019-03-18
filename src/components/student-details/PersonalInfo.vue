@@ -1,5 +1,14 @@
 <template>
   <div>
+
+    <div class="form-group  row"><label class="col-sm-2 col-form-label">Reg. Number</label>
+      <div class="col-sm-10">
+        <input class="form-control"
+               type="text"
+               :value="registrationNumber"
+               disabled="">
+      </div>
+    </div>
     <div class="form-group  row"><label class="col-sm-2 col-form-label">First Name</label>
       <div class="col-sm-10">
         <input class="form-control"
@@ -35,12 +44,13 @@
   export default {
     name: "PersonalInfo",
     props: {
+      registrationNumber: String,
       firstName: String,
       lastName: String,
       email: String
     },
 
-    data: function() {
+    data: function () {
       return {
         updatedFirstName: this.firstName,
         updatedLastName: this.lastName,
