@@ -60,7 +60,7 @@
 
     methods: {
       register() {
-        axios.post('https://goo.gl/DpnR9Y/students/sign-up', this.student)
+        axios.post('https://student-plus-api.herokuapp.com/students/sign-up', this.student)
           .then(() => {
             this.$router.push('/login');
           })

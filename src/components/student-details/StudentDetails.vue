@@ -113,7 +113,7 @@
 
       save() {
         const studentId = localStorage.getItem('studentId');
-        axios.put('https://goo.gl/DpnR9Y/students/' + studentId, this.student, {
+        axios.put('https://student-plus-api.herokuapp.com/students/' + studentId, this.student, {
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
@@ -147,7 +147,7 @@
 
       deleteStudent() {
         const studentId = localStorage.getItem('studentId');
-        axios.delete('https://goo.gl/DpnR9Y/students/' + studentId, {
+        axios.delete('https://student-plus-api.herokuapp.com/students/' + studentId, {
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
@@ -170,7 +170,7 @@
 
           fd.append('file', blob, 'profileImage.png');
 
-          return axios.post('https://goo.gl/DpnR9Y/students/' + this.student.id + '/profileImage', fd, {
+          return axios.post('https://student-plus-api.herokuapp.com/students/' + this.student.id + '/profileImage', fd, {
             headers: {
               'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
