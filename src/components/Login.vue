@@ -6,7 +6,7 @@
         <h3>Welcome to Student+</h3>
         <form class="m-t" role="form" v-on:submit="login">
           <div class="form-group">
-            <input type="email" class="form-control" placeholder="Username" required="" v-model="credentials.email">
+            <input type="email" class="form-control" placeholder="Email" required="" v-model="credentials.email">
           </div>
           <div class="form-group">
             <input type="password" class="form-control" placeholder="Password" required=""

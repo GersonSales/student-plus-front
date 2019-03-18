@@ -4,6 +4,7 @@
       <div class="col-sm-10">
         <input class="form-control"
                type="text"
+               placeholder="Ex.: John"
                v-model="updatedFirstName"
                @input="$emit('update:firstName', updatedFirstName)">
       </div>
@@ -11,6 +12,7 @@
     <div class="form-group  row"><label class="col-sm-2 col-form-label">Last Name</label>
       <div class="col-sm-10">
         <input type="text"
+               placeholder="Ex.: kennedy"
                class="form-control"
                v-model="updatedLastName"
                @input="$emit('update:lastName', updatedLastName)">
@@ -20,6 +22,7 @@
     <div class="form-group row"><label class="col-sm-2 col-form-label">Email</label>
       <div class="col-sm-10">
         <input type="email"
+               placeholder="Ex.: john.kennedy@email.com"
                class="form-control"
                v-model="updatedEmail"
                @input="$emit('update:email', updatedEmail)">
